@@ -3,10 +3,11 @@
 //   tileDescriptions  what you see when you walk into scenery. The names
 //                     match "desc" in maps/chapter1-map.js.
 //   narrator          the narrator's lines and when they appear.
-//   voters            the people in the park. "at" is the x,y of their "v"
-//                     on the map - change it to swap who stands where.
+//   voters            the people in the park. "at" is the x,y of their letter
+//                     on the map (v, or J for the journalist) - change it to
+//                     swap who stands where.
 //   ambientVoters     spare "v"s on the map with no script yet.
-//   donors            the people at the dinner, same idea.
+//   donors            the people at the dinner (the "D"s), same idea.
 //
 // Each question has two options. "type" says what kind of answer it is:
 //   meaningful | platitude | promiseEverything
@@ -271,8 +272,8 @@ var CHAPTER1_CONTENT = {
       "id": "developer",
       "name": "The Property Developer",
       "at": {
-        "x": 46,
-        "y": 13
+        "x": 50,
+        "y": 12
       },
       "questions": [
         {
@@ -298,8 +299,8 @@ var CHAPTER1_CONTENT = {
       "id": "healthcare",
       "name": "The Private Healthcare Executive",
       "at": {
-        "x": 45,
-        "y": 18
+        "x": 58,
+        "y": 17
       },
       "questions": [
         {
@@ -326,8 +327,8 @@ var CHAPTER1_CONTENT = {
       "id": "tech",
       "name": "The Tech & AI Lobbyist",
       "at": {
-        "x": 46,
-        "y": 21
+        "x": 58,
+        "y": 20
       },
       "questions": [
         {
