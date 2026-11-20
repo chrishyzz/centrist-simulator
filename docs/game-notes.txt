@@ -1,0 +1,325 @@
+### Centrist Simulator
+
+
+An ASCII political career simulator
+
+
+### 1\. Concept
+
+
+Centrist Simulator is a political satire inspired by classic Rogue and Liberal Crime Squad.
+
+
+The player navigates three stages of a political career: winning an election, governing the country and building a lucrative post-political career.
+
+
+Each chapter has a five minute countdown, and features its own small, explorable map, characters, interactions and objectives. In each chapter, the player aims to collect votes, political will and legacy.
+
+
+The game's central joke is that your objective is to do nothing; the politician avoids making promises and wastes time with process.
+
+
+Popular, practical policies are available to the player. They can be implemented successfully, produce measurable improvements and unlock further beneficial policies. However, the game's narration and performance assessments respond with increasing alarm.
+
+
+The player is free to pursue genuine improvements, but the game continually insists that they are making terrible political decisions, even though the outcomes are positive. 
+
+
+### 2\. Visual design and interface
+
+
+The game uses a deliberately simple, retro ASCII-inspired graphical interface, drawing heavily on classic Rogue and Liberal Crime Squad.
+
+
+* A tile-based map composed of basic symbols and characters.
+
+
+* A monospaced font and restrained colour palette.
+
+
+* Small, explorable environments rather than large open worlds.
+
+
+* Characters and objects represented by individual symbols.
+
+
+* Keyboard-based movement and contextual interactions.
+
+
+* Minimal menus and information panels.
+
+
+* Occasional notifications, status indicators and graphs integrated into the game world.
+
+
+The interface should feel like an old PC strategy game rather than a contemporary management simulator.
+
+
+Metrics are an important storytelling device. They communicate the state of the country, the player's political fortunes and the priorities of the institutions surrounding them.
+
+
+Different metrics can contradict one another. For example, public satisfaction and living standards might improve while party confidence, donor confidence and the game's overall political assessment deteriorate.
+
+
+### 3\. Game structure
+
+
+The game consists of three distinct chapters.
+
+
+CHAPTER 1: ELECTION
+
+
+Earn votes, raise funds and secure election victory.
+
+
+CHAPTER 2: GOVERNMENT
+
+
+Political capital
+
+
+Spend political capital, navigate Parliament and implement do-nothing policies.
+
+
+CHAPTER 3: POST-POLITICS
+
+
+Legacy
+
+
+Your previous vote winning and fundraising will influence your career post-politics. Will you deliver well-paid speeches? Become a consultant? Join a prestigious board? The world is your oyster!
+
+
+Each chapter has its own map, objectives, interactions and resources. Decisions and achievements carry over between chapters.
+
+
+Themes across the three chapters include: Campaign platitudes, focus groups, fundraising, electoral triangulation, political branding and the avoidance of specific commitments.
+
+
+### 4\. Resources and metrics
+
+
+Each chapter has a distinct primary resource, but other metrics operate throughout the game.
+
+
+Additional metrics could include:
+
+
+* Public approval.
+
+
+* Donor confidence.
+
+
+* Party confidence.
+
+
+* Media relations.
+
+
+* Market confidence.
+
+
+* Fiscal credibility.
+
+
+* Living standards.
+
+
+* Public service performance.
+
+
+* Political influence.
+
+
+* Personal wealth.
+
+
+Metrics should have practical gameplay consequences, but also serve as a vehicle for satire.
+
+
+### 5\. Narrative and humour
+
+
+The principal comedic device is the contrast between actual outcomes and the game's interpretation of those outcomes.
+
+
+The player can make sensible decisions, implement popular policies and improve the country. Yet the narration continually scolds them for departing from political convention.
+
+
+The humour should emerge from several recurring devices:
+
+
+Institutional language
+
+
+Ordinary political setbacks are described through convoluted bureaucratic terminology.
+
+
+Contradictory metrics
+
+
+Positive outcomes are accompanied by increasingly alarming political indicators.
+
+
+Political platitudes
+
+
+Characters rely on familiar phrases about responsibility, stability, consensus and difficult choices.
+
+
+Absurd notifications
+
+
+The interface issues increasingly desperate warnings as the player successfully implements popular policies.
+
+
+Cascading consequences
+
+
+One successful policy unlocks another, producing a chain of improvements that the game regards as an escalating political crisis.
+
+
+Post-political rewards
+
+
+The player discovers that leaving government can be considerably more lucrative than actually governing.
+
+
+### 6\. Endings and career assessment
+
+
+At the conclusion of the third chapter, the game generates a final assessment of the player's political career.
+
+
+This considers:
+
+
+* Electoral performance.
+
+
+* Policies implemented.
+
+
+* Improvements to living standards.
+
+
+* Political survival.
+
+
+* Relationships with influential groups.
+
+
+* Personal wealth.
+
+
+* Corporate appointments.
+
+
+* Public reputation.
+
+
+* Historical legacy.
+
+
+The assessment should be deliberately detached from the actual outcomes.
+
+
+A player who substantially improves the country might be described as an irresponsible populist who failed to understand the importance of moderation.
+
+
+A player who avoids meaningful reforms might be celebrated as a responsible statesman.
+
+
+The final assessment provides a summary of the player's career, with different outcomes depending on their decisions.
+
+
+### 7\. Development approach
+
+
+The game should be developed incrementally, prioritising a functional prototype over extensive content.
+
+
+Stage 1: Basic interface
+
+
+* Create the ASCII-inspired visual style.
+
+
+* Implement a tile-based map.
+
+
+Stage 2: Three chapter environments
+
+
+* Create the election map.
+
+
+* Create the government map.
+
+
+* Create the post-politics map.
+
+
+* Implement transitions between chapters.
+
+
+Stage 3: Core mechanics
+
+
+* Implement the three primary resources.
+
+
+* Add timers and chapter objectives.
+
+
+* Create contextual interactions.
+
+
+* Implement persistent game state.
+
+
+Stage 4: Political simulation
+
+
+* Add policies and their consequences.
+
+
+* Implement cascading policy effects.
+
+
+* Add characters, factions and relationships.
+
+
+* Create the metrics and notifications system.
+
+
+Stage 5: Narrative and polish
+
+
+* Write dialogue and event descriptions.
+
+
+* Add the final career assessment.
+
+
+* Refine the visual presentation.
+
+
+* Balance the three chapters and replayability.
+
+
+The game can be built as a browser-based application using HTML, CSS and JavaScript, with GitHub for development and version control and Vercel or GitHub Pages for hosting.
+
+
+### Overall design philosophy
+
+
+Centrist Simulator should be a compact, accessible and replayable strategy game. Its simple interface conceals a reasonably sophisticated political simulation.
+
+
+The three chapters provide a coherent career progression:
+
+
+Win power. Exercise power. Profit from power.
