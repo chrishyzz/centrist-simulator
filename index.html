@@ -271,12 +271,33 @@ function startChapter1(){
     npcs:[],ambient:[],
     convo:null,pending:[],popupQueue:[],popupOpen:false,popupAt:0,seen:{},
     dinnerOpen:false,ended:false,
+steps:0,journalistAlerted:false,
     startedAt:Date.now(),last:Date.now(),parkSecs:0,cues:{},
     canapes:0,eaten:{},bumps:{},funds:0,
     tally:{meaningful:0,platitude:0,promiseEverything:0}
   };
-  C.voters.forEach(function(v){ch.npcs.push({kind:"voter",name:v.name,topic:v.topic,x:v.at.x,y:v.at.y,data:v,done:false})});
-  C.donors.forEach(function(d){ch.npcs.push({kind:"donor",name:d.name,x:d.at.x,y:d.at.y,data:d,done:false})});
+  C.voters.forEach(function(v){
+  ch.npcs.push({
+    kind:v.id==="journalist"?"journalist":"voter",
+    name:v.name,
+    topic:v.topic,
+    x:v.at.x,
+    y:v.at.y,
+    data:v,
+    done:false
+  });
+});
+
+C.donors.forEach(function(d){
+  ch.npcs.push({
+    kind:"donor",
+    name:d.name,
+    x:d.at.x,
+    y:d.at.y,
+    data:d,
+    done:false
+  });
+});
   C.ambientVoters.forEach(function(a){ch.ambient.push({x:a.x,y:a.y})});
   // each person is drawn with the letter the map has for them (v, J or D); the ground under them is empty
   ch.npcs.forEach(function(n){n.glyph=ch.grid[n.y][n.x];ch.grid[n.y][n.x]=" "});
@@ -376,7 +397,60 @@ function tileAt(x,y){
   var M=ch.M,name=M.overrides[x+","+y]||M.legend[ch.grid[y][x]];
   return name?M.tiles[name]:null;
 }
+  function moveJournalist(){
+  var j=null;
 
+  for(var i=0;i<ch.npcs.length;i++){
+    if(ch.npcs[i].kind==="journalist"){
+      j=ch.npcs[i];
+      break;
+    }
+  }
+
+  if(!j||j.done)return;
+
+  var dirs=[[0,-1],[1,0],[0,1],[-1,0]];
+  var queue=[{x:j.x,y:j.y,first:null}];
+  var seen={};
+
+  while(queue.length){
+    var current=queue.shift();
+    var key=current.x+","+current.y;
+
+    if(seen[key])continue;
+    seen[key]=true;
+
+    // Stop when the journalist reaches a square beside you.
+    if(
+      (current.x!==j.x||current.y!==j.y)&&
+      Math.abs(current.x-ch.player.x)+Math.abs(current.y-ch.player.y)===1
+    ){
+      j.x=current.first.x;
+      j.y=current.first.y;
+      return;
+    }
+
+    for(var d=0;d<dirs.length;d++){
+      var nx=current.x+dirs[d][0];
+      var ny=current.y+dirs[d][1];
+
+      if(nx<0||ny<0||nx>=ch.M.width||ny>=ch.M.height)continue;
+      if(nx>PARK_MAX_X)continue;
+      if(seen[nx+","+ny])continue;
+      if(nx===ch.player.x&&ny===ch.player.y)continue;
+      if(npcAt(nx,ny))continue;
+
+      var t=tileAt(nx,ny);
+      if(t&&t.solid)continue;
+
+      queue.push({
+        x:nx,
+        y:ny,
+        first:current.first||{x:nx,y:ny}
+      });
+    }
+  }
+}
 function moveCh(dx,dy){
   if(ch.ended||ch.convo)return;
   var p=ch.player,nx=p.x+dx,ny=p.y+dy,M=ch.M;
@@ -392,9 +466,20 @@ function moveCh(dx,dy){
     }
     say("You pass through the door.");
   }
-  p.x=nx;p.y=ny;
+    p.x=nx;p.y=ny;
+
+  ch.steps++;
+
+  if(ch.steps===6){
+    ch.journalistAlerted=true;
+    narrate("Alert! We've just spotted a journalist looking for you in the park. Avoid them at all costs.");
+  }else if(ch.journalistAlerted&&(ch.steps-6)%4===0){
+    moveJournalist();
+  }
+
   if(t&&t.desc)describeOnce(nx,ny,t);
   drawCh1();
+}
 }
 
 // Walk-through scenery (plants, trees, pond): show its text the first time you step on each one.
