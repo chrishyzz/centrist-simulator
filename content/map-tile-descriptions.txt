@@ -1,0 +1,26 @@
+MAP TILE DESCRIPTIONS
+
+
+Pond
+Default: "Pond: Murky park water. A few ducks look at you with the cold indifference of swing voters."
+Alternative: "Pond: Still water reflecting the sky. You dream of joining the blissfully ignorant duck."
+
+
+Plants
+Default: "Plants: Carefully trimmed to look natural without actually being wild."
+Alternative: "Plants: Municipal shrubbery. Funded by a pilot scheme that lost its funding."
+
+
+Trees
+Default: "Trees: Mature park trees. You resist the urge to climb."
+Alternative: "Trees: Leafy canopy. You kick a leaf. You imagine it is your opponent."
+
+
+Canape Table
+Default (has canapes): "Canape Table: A silver tray of tiny, expensive snacks. Essential campaign infrastructure."
+Empty (canapes eaten): "Canape Table: Crumbs and napkins. The refreshments have been thoroughly consulted."
+
+
+Tables
+Default: "Tables: Folding event tables. Draped in cloth to hide the cheap plastic underneath."
+Alternative: "Tables: Reception tables. Waiting for someone to put something concrete on them."
