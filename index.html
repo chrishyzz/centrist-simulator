@@ -317,7 +317,72 @@ function paletteStyle(key){
   var p=P[key];
   return"color:"+p[0]+";background:"+p[1]+(p[2]?";font-weight:bold":"");
 }
+
 function drawCh1(){
+  var M=ch.M,out="",chars,keys,x,y;
+
+  for(y=0;y<M.height;y++){
+    chars=[];
+    keys=[];
+
+    for(x=0;x<M.width;x++){
+      chars[x]=ch.grid[y][x];
+      keys[x]=B62.indexOf(M.colorRows[y].charAt(x));
+    }
+
+    // Ambient voters are always yellow.
+    ch.ambient.forEach(function(a){
+      if(a.y===y){
+        chars[a.x]=a.glyph;
+        keys[a.x]=56;
+      }
+    });
+
+    // NPCs retain their own colours wherever they move.
+    ch.npcs.forEach(function(n){
+      if(n.y===y){
+        chars[n.x]=n.glyph;
+
+        if(n.kind==="voter" || n.kind==="journalist"){
+          keys[n.x]=56;
+        }
+
+        if(n.kind==="donor"){
+          keys[n.x]=54;
+        }
+
+        // Characters already spoken to fade out.
+        if(n.done){
+          keys[n.x]=-1-keys[n.x];
+        }
+      }
+    });
+
+    // Player.
+    if(ch.player.y===y){
+      chars[ch.player.x]="@";
+      keys[ch.player.x]=19;
+    }
+
+    var run="",cur=null;
+
+    for(x=0;x<M.width;x++){
+      if(keys[x]!==cur){
+        if(cur!==null){
+          out+='<span style="'+paletteStyle(cur)+'">'+run+'</span>';
+        }
+        cur=keys[x];
+        run="";
+      }
+      run+=esc(chars[x]);
+    }
+
+    out+='<span style="'+paletteStyle(cur)+'">'+run+'</span>\n';
+  }
+
+  mapEl.innerHTML=out;
+}
+
   var M=ch.M,out="",chars,keys,x,y;
   for(y=0;y<M.height;y++){
     chars=[];keys=[];
