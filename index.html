@@ -172,6 +172,9 @@ var tutGrid=tutRows.map(function(r){return r.split("")});
 var DOOR_TO_CH1={x:22,y:3};
 var player={x:2,y:4},npc={x:6,y:2},table={x:16,y:3};
 var tutTalking=false;
+var tutAdvisorDone=false;
+var tutIntroOpen=true;
+var introOutcome=null;
 
 function drawTut(){
   var out="";
@@ -179,7 +182,7 @@ function drawTut(){
     for(var x=0;x<tutGrid[y].length;x++){
       var c=tutGrid[y][x],cls="";
       if(x===player.x&&y===player.y){c="@";cls="p"}
-      else if(x===npc.x&&y===npc.y){c="N";cls="n"}
+     else if(x===npc.x&&y===npc.y){c="P";cls="n"}
       else if(x===table.x&&y===table.y){c="T";cls="t"}
       else if(c==="+")cls="d";
       else if(c==="#")cls="w";
@@ -191,23 +194,48 @@ function drawTut(){
   mapEl.innerHTML=out;
 }
 function tutOpenTalk(){
+  if(tutAdvisorDone){
+    say('PR Advisor: "Remember, keep it simple."');
+    return;
+  }
+
   tutTalking=true;
-  say('Stranger: "Hello."');
-  showOptions(["[1] Hi","[2] Good day"],tutChoose);
+  say('PR Advisor: "I have a busy day planned for you. Meeting voters first, then an important donor dinner. Just don\'t say anything stupid, OK?"');
+
+  showOptions([
+    "[1] I just want to make a real difference to people's lives!",
+    "[2] I will do as I'm told, don't worry."
+  ],tutChoose);
 }
+
 function tutChoose(i){
   if(!tutTalking)return;
-  var line=i===0?"Hi.":"Good day.";
+
   tutTalking=false;
+  tutAdvisorDone=true;
+  introOutcome=i===0?"idealistic":"compliant";
+
   clearOpts();
-  say('You: "'+line+'"\n\n(The conversation ends.)');
+
+  if(i===0){
+    say('You: "I just want to make a real difference to people\'s lives!"\n\nSYSTEM ALERT: Your enthusiasm makes the Party very concerned. Apparatchik confidence -10.');
+  }else{
+    say('You: "I will do as I\'m told, don\'t worry."\n\nSYSTEM ALERT: We love that can-do attitude! You\'ll go far. +27 career prospects.');
+  }
 }
 function moveTut(dx,dy){
-  if(tutTalking)return;
+    if(tutIntroOpen||tutTalking)return;
   var nx=player.x+dx,ny=player.y+dy;
   if(nx===npc.x&&ny===npc.y){tutOpenTalk();drawTut();return}
   if(nx===table.x&&ny===table.y){say("A plain table. Nothing on it.");return}
-  if(nx===DOOR_TO_CH1.x&&ny===DOOR_TO_CH1.y){startChapter1();return}
+  if(nx===DOOR_TO_CH1.x&&ny===DOOR_TO_CH1.y){
+  if(!tutAdvisorDone){
+    say("The PR Advisor blocks your way. Have a word with them first.");
+    return;
+  }
+  startChapter1();
+  return;
+}
   var c=tutGrid[ny]&&tutGrid[ny][nx];
   if(!c||c==="#"){return}
   player.x=nx;player.y=ny;
@@ -318,11 +346,17 @@ function showPopup(){
   popupEl.hidden=false;
 }
 function closePopup(){
+  if(mode==="tutorial"&&tutIntroOpen){
+    tutIntroOpen=false;
+    popupEl.hidden=true;
+    return;
+  }
+
   if(!ch||!ch.popupOpen)return;
   ch.popupQueue.shift();
   if(ch.popupQueue.length){showPopup();return}
   var now=Date.now();
-  ch.startedAt+=now-ch.popupAt;ch.last=now;     // give back the time spent reading
+  ch.startedAt+=now-ch.popupAt;ch.last=now;
   ch.popupOpen=false;
   popupEl.hidden=true;
   updateHud();
@@ -491,7 +525,19 @@ function step(dx,dy){
 
 document.addEventListener("keydown",function(e){
   var k=e.key.toLowerCase();
-  if(mode==="tutorial"&&tutTalking){if(k==="1")tutChoose(0);else if(k==="2")tutChoose(1);return}
+  if(mode==="tutorial"&&tutIntroOpen){
+  if(k==="1"||k==="enter"||k===" "){
+    e.preventDefault();
+    closePopup();
+  }
+  return;
+}
+
+if(mode==="tutorial"&&tutTalking){
+  if(k==="1")tutChoose(0);
+  else if(k==="2")tutChoose(1);
+  return;
+}
   if(mode==="ch1"){
     if(ch.popupOpen){if(k==="1"||k==="enter"||k===" "){e.preventDefault();closePopup()}return}
     if(ch.ended){if(k==="r")location.reload();return}
@@ -512,8 +558,13 @@ document.querySelectorAll("#pad button").forEach(function(b){
 document.getElementById("restart").onclick=function(){location.reload()};
 document.getElementById("popup-ok").onclick=closePopup;
 
-say("You are in a room. A stranger stands nearby. There is a door on the east wall.");
+titleEl.textContent="SHADY BACKROOM";
+
+say("Your PR Advisor is waiting. There is a door on the east wall.");
 drawTut();
+
+popupText.textContent="Congratulations, you just won the party nomination. Now it's time to win an election. Listen to me and you'll go far.";
+popupEl.hidden=false;
 </script>
 </body>
 </html>
