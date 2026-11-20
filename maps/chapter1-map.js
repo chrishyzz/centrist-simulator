@@ -4,10 +4,13 @@
 //   x = column (0 is the far left), y = row (0 is the top).  A tile is rows[y][x].
 //   "rows" is the map exactly as you drew it.  A quote mark inside a row is
 //   written \"  - that backslash is just how JavaScript spells a quote. Ignore it.
-//   "@" is where the player starts and each "v" is a voter. The game lifts
-//   these out of the grid when the level loads (the ground under them is walkable).
+//   "@" is where the player starts, "v" is a voter, "J" the journalist and "D" a
+//   donor. The game lifts these out of the grid when the level loads (the ground
+//   under them is walkable). Who each one is lives in content/chapter1-content.js.
 //   Anything NOT listed in "legend" is walkable scenery (grass, path, road,
 //   carpet, floor, and the lettering like HIGH STREET and VIP ONLY).
+//   Plants, trees and the pond are walkable too: the game shows their "desc"
+//   text the first time you step on each one.
 //   "desc" names a text in your MAP TILE DESCRIPTIONS file.
 //   "colorRows" is only the colours (one character per tile, an index into
 //   "palette"). It keeps your map looking the way you drew it.
@@ -31,16 +34,16 @@ var CHAPTER1_MAP = {
     "║ &. `\"    *░░  \"   . ,,          '    #│   │   ║  .        ...║ ║",
     "║  *'      `░░ `'   `    . \"i   ` \"  , #│ | │   ║ FUNDRAISING .║.║",
     "║ ,♣      ♣ ░░░░░░░░░░░░░░░░           #│   │. .▒..  DINNER    ▒ ║",
-    "║      ,v   \" ,  . *  =   ░░           #│ | │ ..▒.   .      ...▒♣║",
-    "║ ,, &  ,*  .  &♣v`,,'  `,░░\"` ' ' \"♣  #│   │ v ║.. VIP ONLY   ║ ║",
+    "║      ,v   \" ,  . *  =   ░░           #│ | │ ..▒.D  .      ...▒♣║",
+    "║ ,, &  ,*  .  &♣v`,,'  `,░░\"` ' ' \"♣  #│   │   ║.. VIP ONLY   ║ ║",
     "║.   \"     .   , '    ♣,\" ░░,\" .      .║│   │   ║     .   . . .▒.║",
     "║  v '♣ .  &*`   , ,.   * ░░,  = '\"  i   ===   o║ (o)  (o) .(o)▒ ║",
     "║`  *  \"\"\"\"\"\"\"..`& ,\"  '  ░░░░░░░░░░░░░░     ▓▓▓+   ...  .     ║ ║",
-    "║ ♣.\"\"\"~≈~≈~≈~\"\"\"*\"    `     \". ,*   i   ===   o║.   .   .  .. ║ ║",
-    "║v \"~≈~≈~≈~≈~≈~≈~\" . ,  *' .`\"      '*`║│   │v  ║  .  .   .    ║♣║",
-    "║ \"~≈~≈~≈~≈~≈~≈~≈~\"\"   v    ' , '  `  ,#│   │ . ▒ (o)  (o). (o)║ ║",
-    "║\" \"~≈~≈~≈~≈~≈~≈~\"  &`   ,`,♣  .`  *  .#│ | │.  ▒     .        ║.║",
-    "║  ,\"\"\"~≈~≈~≈~\"\"\" `,  ,     \"   , '    #│   │ v.╚══════════════╝ ║",
+    "║ ♣.\"\"\"~≈~≈~≈~\"\"\"*\"    `     \". ,*   i   ===   o║.   .   .D .. ║ ║",
+    "║v \"~≈~≈~≈~≈~≈~≈~\" . ,  *' .`\"      '*`║│   │   ║  .  .   .    ║♣║",
+    "║ \"~≈~≈~≈~≈~≈~≈~≈~\"\"   J    ' , '  `  ,#│   │ . ▒  C    C .  C ║ ║",
+    "║\" \"~≈~≈~≈~≈~≈~≈~\"  &`   ,`,♣  .`  *  .#│ | │.  ▒     .   D    ║.║",
+    "║  ,\"\"\"~≈~≈~≈~\"\"\" `,  ,     \"   , '    #│   │  .╚══════════════╝ ║",
     "║ ..&\" \"\"\"\"\"\"\"  &.`    *  \" ,   ,      #│ | │  ♣ .    .   .   ♣  ║",
     "║ .  '`       .  '      ♣\"'   '♣  `   `#│   │ .      .     .  . .║",
     "╚════════════════════════════════════════════════════════════════╝"
@@ -50,15 +53,16 @@ var CHAPTER1_MAP = {
   tiles: {
     wall:        { solid: true },
     kerb:        { solid: true },
-    hedge:       { solid: true, desc: "plants" },
-    shrub:       { solid: true, desc: "plants" },
-    flowers:     { solid: true, desc: "plants" },
-    tree:        { solid: true, desc: "trees" },
-    pond:        { solid: true, desc: "pond" },
+    hedge:       { solid: false, desc: "plants" },
+    shrub:       { solid: false, desc: "plants" },
+    flowers:     { solid: false, desc: "plants" },
+    tree:        { solid: false, desc: "trees" },
+    pond:        { solid: false, desc: "pond" },
     bench:       { solid: true },
     lamppost:    { solid: true },
     post:        { solid: true },
     window:      { solid: true },
+    table:       { solid: true, desc: "tables" },
     canapeTable: { solid: true, desc: "canapeTable" },
     door:        { solid: false, interact: "door" },
     crossing:    { solid: false }
@@ -68,7 +72,7 @@ var CHAPTER1_MAP = {
   legend: {
     "#": "hedge", "&": "shrub", "*": "flowers", "\u2663": "tree",
     "~": "pond", "\u2248": "pond", "=": "bench", "i": "lamppost",
-    "(": "canapeTable", "o": "canapeTable", ")": "canapeTable",
+    "(": "table", "o": "table", ")": "table", "C": "canapeTable",
     "\u2592": "window", "+": "door",
     "\u2551": "wall", "\u2550": "wall", "\u2554": "wall", "\u2557": "wall", "\u255a": "wall", "\u255d": "wall",
     "\u2502": "kerb", "\u2500": "kerb", "\u250c": "kerb", "\u2510": "kerb"
@@ -76,7 +80,7 @@ var CHAPTER1_MAP = {
 
   // A few tiles share a symbol with something else, so they are set by position.
   // The zebra crossing "===" is walkable (but a park bench "=" is not),
-  // and the "o" posts either side of the red carpet are not canape tables.
+  // and the "o" posts either side of the red carpet are not tables.
   overrides: {
     "41,15": "crossing", "42,15": "crossing", "43,15": "crossing",
     "41,17": "crossing", "42,17": "crossing", "43,17": "crossing",
@@ -137,7 +141,9 @@ var CHAPTER1_MAP = {
     ["#2f7fb8", "#0f2a40", 0],
     ["#4aa3df", "#0f2a40", 0],
     ["#ff9f43", "#232323", 1],
-    ["#1dd1a1", "#232323", 1]
+    ["#1dd1a1", "#232323", 1],
+    ["#ff9f43", "#2a1f16", 1],
+    ["#1dd1a1", "#2a1f16", 1]
   ],
   colorRows: [
     "000000000000000000000000000000000000000000000000000000000000000000",
@@ -152,16 +158,16 @@ var CHAPTER1_MAP = {
     "06n96576666skk66c666565c666666666676666wg111ghhhvxyzyxyxyyyyzzzvh0",
     "066s56666665kk67966656666567q6665656696Ag131ghhhvyBBBBBBBBBBByzvi0",
     "06cl666666e6kkkkkkkkkkkkkkkk66666666666Ag111gihiCzzyyBBBBBByyyxCh0",
-    "0666666cD666c676696t66r666kk66666666666wg131ghiiCzxyyzyyyxxxzzzCo0",
-    "06cc6n669s66766dlm9979665ckkcc656c67e66Ag111ghEhvzzyFFFFFFFFyyyvh0",
+    "0666666cD666c676696t66r666kk66666666666wg131ghiiCzFyyzyyyxxxzzzCo0",
+    "06cc6n669s66766dlm9979665ckkcc656c67e66Ag111ghhhvzzyFFFFFFFFyyyvh0",
     "09666c6666656667656666e7c6kk9c676666665Gg111ghhhvxyyyyzyyyzxzxzCi0",
     "066a67b6766na5666769c666a6kk766r67566q6H1III1hhJvyKKKxxKKKyzKKKCh0",
     "0966s66LLLLLLL9ccd65766c66kkkkkkkkkkkkkk11111MMMBxyyzzzyxzyxyyyvh0",
-    "06lcLLLNONONONLLLa56666c66666c965p666q6H1III1hhJvzxyyzyxxzxyzzxvh0",
-    "0u6LNONONONONONONL696966p96c7c6666669p7Gg111gPhhvyxzxxzyxyzyyyyvo0",
-    "06LNONONONONONONONL9666a666696765667665Ag111ghihCxKKKyyKKKzyKKKvh0",
-    "0c6LNONONONONONONL66n5666799e669566a667fg131gihhCyyyyyzxyyyyxyxvi0",
-    "0665LLLNONONONLLL6c96696666676669656666Ag111ghQivvvvvvvvvvvvvvvvh0",
+    "06lcLLLNONONONLLLa56666c66666c965p666q6H1III1hhJvzxyyzyxxzRyzzxvh0",
+    "0u6LNONONONONONONL696966p96c7c6666669p7Gg111ghhhvyxzxxzyxyzyyyyvo0",
+    "06LNONONONONONONONL9666a666696765667665Ag111ghihCxyKyyyyKyzyyKyvh0",
+    "0c6LNONONONONONONL66n5666799e669566a667fg131gihhCyyyyyzxyySyxyxvi0",
+    "0665LLLNONONONLLL6c96696666676669656666Ag111ghhivvvvvvvvvvvvvvvvh0",
     "06ccn76LLLLLLL66d756666s66765666c666666wg131ghhohihhhhihhhihhhohh0",
     "067667766666667665666666l57666ce6696667wg111ghihhhhhhihhhhhihhihi0",
     "000000000000000000000000000000000000000000000000000000000000000000"
