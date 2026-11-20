@@ -31,6 +31,12 @@ html.ch1 pre{font-size:min(16px,calc((100vw - 32px)/40))}
 #pad button{margin:0;padding:10px 0}
 .help{color:var(--dim);font-size:12px;margin-top:10px}
 #restart{font-size:12px;padding:3px 8px;margin:6px 0 0}
+#popup{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
+#popup[hidden]{display:none}
+#popup .box{max-width:480px;width:100%;background:var(--panel);border:1px solid var(--door);padding:18px}
+#popup .who{color:var(--door);font-size:12px;letter-spacing:2px;margin-bottom:10px}
+#popup-text{font-size:16px;line-height:1.5;color:var(--fg)}
+#popup button{font:inherit;background:none;color:var(--fg);border:1px solid var(--door);padding:6px 14px;margin-top:14px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -47,6 +53,9 @@ html.ch1 pre{font-size:min(16px,calc((100vw - 32px)/40))}
 <div class="help">Arrow keys / WASD to move. Walk into things to interact. 1 / 2 to answer.</div>
 <button id="restart">Restart</button>
 </main>
+<div id="popup" hidden>
+<div class="box"><div class="who">NARRATOR</div><div id="popup-text"></div><button id="popup-ok">[1] Continue</button></div>
+</div>
 
 <!-- Chapter 1 data. If these two files are missing the door in the second room will say so. -->
 <script src="maps/chapter1-map.js"></script>
@@ -62,7 +71,8 @@ html.ch1 pre{font-size:min(16px,calc((100vw - 32px)/40))}
    ============================================================ */
 
 var mapEl=document.getElementById("map"),logEl=document.getElementById("log"),optsEl=document.getElementById("opts"),
-    hudEl=document.getElementById("hud"),titleEl=document.getElementById("title");
+    hudEl=document.getElementById("hud"),titleEl=document.getElementById("title"),
+    popupEl=document.getElementById("popup"),popupText=document.getElementById("popup-text");
 var mode="tutorial"; // "tutorial" or "ch1"
 
 /* ---------- Part 1: shared helpers ---------- */
@@ -165,11 +175,11 @@ function startChapter1(){
   clearOpts();
   ch={
     M:M,C:C,
-    // the map, with the "@" and "v" lifted out (the ground under them is empty)
-    grid:M.rows.map(function(r){return Array.from(r).map(function(c){return(c==="v"||c==="@")?" ":c})}),
+    // the map as a grid of characters (people are lifted out below)
+    grid:M.rows.map(function(r){return Array.from(r)}),
     player:{x:M.start.x,y:M.start.y},
     npcs:[],ambient:[],
-    convo:null,pending:[],
+    convo:null,pending:[],popupQueue:[],popupOpen:false,popupAt:0,seen:{},
     dinnerOpen:false,ended:false,
     startedAt:Date.now(),last:Date.now(),parkSecs:0,cues:{},
     canapes:0,eaten:{},bumps:{},funds:0,
@@ -178,6 +188,11 @@ function startChapter1(){
   C.voters.forEach(function(v){ch.npcs.push({kind:"voter",name:v.name,topic:v.topic,x:v.at.x,y:v.at.y,data:v,done:false})});
   C.donors.forEach(function(d){ch.npcs.push({kind:"donor",name:d.name,x:d.at.x,y:d.at.y,data:d,done:false})});
   C.ambientVoters.forEach(function(a){ch.ambient.push({x:a.x,y:a.y})});
+  // each person is drawn with the letter the map has for them (v, J or D); the ground under them is empty
+  ch.npcs.forEach(function(n){n.glyph=ch.grid[n.y][n.x];ch.grid[n.y][n.x]=" "});
+  ch.ambient.forEach(function(a){a.glyph=ch.grid[a.y][a.x];ch.grid[a.y][a.x]=" "});
+  ch.grid[M.start.y][M.start.x]=" ";
+  popupEl.hidden=true;
   clearLog();
   add("You step out into the park.","dim");
   narrate(C.narrator.enterPark);
@@ -196,8 +211,8 @@ function drawCh1(){
   for(y=0;y<M.height;y++){
     chars=[];keys=[];
     for(x=0;x<M.width;x++){chars[x]=ch.grid[y][x];keys[x]=B62.indexOf(M.colorRows[y].charAt(x))}
-    ch.ambient.forEach(function(a){if(a.y===y){chars[a.x]="v"}});
-    ch.npcs.forEach(function(n){if(n.y===y){chars[n.x]="v";if(n.done)keys[n.x]=-1-keys[n.x]}});
+    ch.ambient.forEach(function(a){if(a.y===y){chars[a.x]=a.glyph}});
+    ch.npcs.forEach(function(n){if(n.y===y){chars[n.x]=n.glyph;if(n.done)keys[n.x]=-1-keys[n.x]}});
     if(ch.player.y===y){chars[ch.player.x]="@";keys[ch.player.x]=19}
     var run="",cur=null;
     for(x=0;x<M.width;x++){
@@ -222,13 +237,29 @@ function updateHud(){
     "   DONORS "+metCount("donor")+"/"+totalCount("donor")+"   FUNDS £"+ch.funds.toLocaleString("en-GB");
 }
 
+/* Narrator pop-ups. The clock is paused while one is on screen. */
 function narrate(text){
   if(ch.convo){ch.pending.push(text);return}   // never interrupt a conversation
-  add("Narrator: “"+text+"”","nar");
+  ch.popupQueue.push(text);
+  if(!ch.popupOpen){ch.popupOpen=true;ch.popupAt=Date.now();showPopup()}
+}
+function showPopup(){
+  popupText.textContent="“"+ch.popupQueue[0]+"”";
+  popupEl.hidden=false;
+}
+function closePopup(){
+  if(!ch||!ch.popupOpen)return;
+  ch.popupQueue.shift();
+  if(ch.popupQueue.length){showPopup();return}
+  var now=Date.now();
+  ch.startedAt+=now-ch.popupAt;ch.last=now;     // give back the time spent reading
+  ch.popupOpen=false;
+  popupEl.hidden=true;
+  updateHud();
 }
 function flushNarrator(){
   var q=ch.pending;ch.pending=[];
-  q.forEach(function(t){add("Narrator: “"+t+"”","nar")});
+  q.forEach(narrate);
 }
 
 function npcAt(x,y){
@@ -258,9 +289,25 @@ function moveCh(dx,dy){
     say("You pass through the door.");
   }
   p.x=nx;p.y=ny;
+  if(t&&t.desc)describeOnce(nx,ny,t);
   drawCh1();
 }
 
+// Walk-through scenery (plants, trees, pond): show its text the first time you step on each one.
+function describeOnce(x,y,t){
+  var key=x+","+y;
+  if(ch.seen[key])return;
+  ch.seen[key]=true;
+  var d=ch.C.tileDescriptions[t.desc];
+  if(!d)return;
+  var texts=[d["default"]];
+  if(d.alternative)texts.push(d.alternative);
+  var i=ch.bumps[t.desc]||0;
+  ch.bumps[t.desc]=i+1;
+  say(texts[i%texts.length]);
+}
+
+// Solid things with a text (tables, canape tables): you bump into them.
 function bumpTile(x,y,t){
   if(!t.desc)return;
   if(t.desc==="canapeTable"){eatCanape(x,y);return}
@@ -273,7 +320,7 @@ function bumpTile(x,y,t){
   say(texts[i%texts.length]);
 }
 function eatCanape(x,y){
-  var c=ch.grid[y][x],gx=c==="("?x:c==="o"?x-1:x-2,key=gx+","+y;  // each "(o)" is one table
+  var key=x+","+y;   // each "C" is one canape table
   var D=ch.C.tileDescriptions.canapeTable,N=ch.C.narrator;
   if(ch.eaten[key]){say(D.empty);return}
   ch.eaten[key]=true;
@@ -284,7 +331,7 @@ function eatCanape(x,y){
 
 /* ----- conversations ----- */
 function talkTo(n){
-  if(n.kind==="ambient"){say("They smile politely. (This voter has nothing to say yet.)");return}
+  if(n.kind==="ambient"){say("Voter stares at you blankly.");return}
   if(n.done){say("You have already spoken to "+n.name+".");return}
   if(n.kind==="donor"&&!ch.dinnerOpen){say("(Come back after you have spoken to the voters in the park.)");return}
   ch.convo={npc:n,qi:0,stage:"q"};
@@ -341,6 +388,7 @@ function endConvo(){
 
 function endChapter(success){
   ch.ended=true;ch.convo=null;
+  ch.popupQueue=[];ch.popupOpen=false;popupEl.hidden=true;
   clearOpts();clearLog();
   add(success?"CHAPTER 1 COMPLETE":"TIME'S UP","al");
   add("Voters met: "+metCount("voter")+"/"+totalCount("voter"));
@@ -355,6 +403,7 @@ function endChapter(success){
 /* the clock */
 setInterval(function(){
   if(mode!=="ch1"||!ch||ch.ended)return;
+  if(ch.popupOpen){ch.last=Date.now();return}
   var now=Date.now(),dt=(now-ch.last)/1000,elapsed=(now-ch.startedAt)/1000,N=ch.C.narrator;
   ch.last=now;
   if(ch.player.x<=PARK_MAX_X)ch.parkSecs+=dt;
@@ -365,12 +414,16 @@ setInterval(function(){
 },250);
 
 /* ---------- Part 4: keyboard and buttons ---------- */
-function step(dx,dy){if(mode==="ch1")moveCh(dx,dy);else moveTut(dx,dy)}
+function step(dx,dy){
+  if(mode==="ch1"){if(ch.popupOpen)return;moveCh(dx,dy)}
+  else moveTut(dx,dy);
+}
 
 document.addEventListener("keydown",function(e){
   var k=e.key.toLowerCase();
   if(mode==="tutorial"&&tutTalking){if(k==="1")tutChoose(0);else if(k==="2")tutChoose(1);return}
   if(mode==="ch1"){
+    if(ch.popupOpen){if(k==="1"||k==="enter"||k===" "){e.preventDefault();closePopup()}return}
     if(ch.ended){if(k==="r")location.reload();return}
     if(ch.convo){
       if(k==="1")pickOption(0);
@@ -387,6 +440,7 @@ document.querySelectorAll("#pad button").forEach(function(b){
   b.onclick=function(){var d=dirs[b.dataset.k];step(d[0],d[1])};
 });
 document.getElementById("restart").onclick=function(){location.reload()};
+document.getElementById("popup-ok").onclick=closePopup;
 
 say("You are in a room. A stranger stands nearby. There is a door on the east wall.");
 drawTut();
