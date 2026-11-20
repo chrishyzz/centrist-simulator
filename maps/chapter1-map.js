@@ -1,9 +1,9 @@
 // CHAPTER 1: ELECTION - the park and the fundraising dinner.
 //
 // How to read this file
-//   x = column (0 is the far left), y = row (0 is the top).  A tile is rows[y][x].
-//   "rows" is the map exactly as you drew it.  A quote mark inside a row is
-//   written \"  - that backslash is just how JavaScript spells a quote. Ignore it.
+//   x = column (0 is the far left), y = row (0 is the top). A tile is rows[y][x].
+//   "rows" is the map exactly as you drew it. A quote mark inside a row is
+//   written \" - that backslash is just how JavaScript spells a quote. Ignore it.
 //   "@" is where the player starts, "v" is a voter, "J" the journalist and "D" a
 //   donor. The game lifts these out of the grid when the level loads (the ground
 //   under them is walkable). Who each one is lives in content/chapter1-content.js.
@@ -96,23 +96,23 @@ var CHAPTER1_MAP = {
     ["#8a8a92", "#232323", 0],
     ["#27553a", "#14201a", 0],
     ["#cccccc", "#14201a", 0],
-    ["#3d8b4a", "#14201a", 0],
+    ["#397a48", "#14201a", 0],
     ["#e8e0c8", "#14201a", 1],
-    ["#2f6b3a", "#14201a", 0],
+    ["#285b38", "#14201a", 0],
     ["#feca57", "#14201a", 1],
-    ["#3fbf5a", "#14201a", 1],
-    ["#4a9a55", "#14201a", 0],
-    ["#2e8b4a", "#14201a", 0],
-    ["#4cd36a", "#14201a", 1],
-    ["#2f7d32", "#14201a", 0],
+    ["#65a875", "#14201a", 1],
+    ["#4b925b", "#14201a", 0],
+    ["#34764a", "#14201a", 0],
+    ["#79b987", "#14201a", 1],
+    ["#285b38", "#14201a", 0],
     ["#8a8a92", "#2b2b2e", 0],
     ["#cccccc", "#232323", 0],
     ["#3a3a3a", "#232323", 0],
     ["#000000", "#ffd866", 1],
     ["#8c7b55", "#241f16", 0],
-    ["#35a84f", "#14201a", 1],
+    ["#65a875", "#14201a", 1],
     ["#54a0ff", "#14201a", 1],
-    ["#3a9d58", "#14201a", 0],
+    ["#4b925b", "#14201a", 0],
     ["#3fbf5a", "#232323", 1],
     ["#ff9ff3", "#14201a", 1],
     ["#ffd866", "#14201a", 1],
@@ -121,23 +121,23 @@ var CHAPTER1_MAP = {
     ["#ff6b81", "#14201a", 1],
     ["#1dd1a1", "#14201a", 1],
     ["#c98a4b", "#232323", 0],
-    ["#3a8f3e", "#14201a", 0],
-    ["#3a3a3a", "#2a1f16", 0],
-    ["#cccccc", "#2a1f16", 0],
-    ["#4a3a2a", "#2a1f16", 0],
-    ["#256b2a", "#14201a", 0],
-    ["#ffd866", "#2a1f16", 1],
+    ["#34764a", "#14201a", 0],
+    ["#806747", "#2a1f16", 0],
+    ["#b69a70", "#2a1f16", 0],
+    ["#957951", "#2a1f16", 0],
+    ["#285b38", "#14201a", 0],
+    ["#ff6b81", "#2a1f16", 1],
     ["#6fb7e0", "#232323", 0],
     ["#c56cf0", "#14201a", 1],
     ["#ff6b81", "#232323", 1],
     ["#ff6b81", "#2a1f16", 1],
-    ["#c9b48a", "#14201a", 0],
+    ["#b69a70", "#14201a", 0],
     ["#cccccc", "#1b1d1b", 0],
     ["#e6e6e6", "#2b2b2e", 0],
     ["#ffd866", "#232323", 1],
-    ["#e8c07d", "#2a1f16", 1],
-    ["#3f8f8a", "#14201a", 0],
-    ["#a3262a", "#232323", 0],
+    ["#c5a675", "#2a1f16", 1],
+    ["#4b925b", "#14201a", 0],
+    ["#397a48", "#14201a", 0],
     ["#2f7fb8", "#0f2a40", 0],
     ["#4aa3df", "#0f2a40", 0],
     ["#ff9f43", "#232323", 1],
@@ -145,6 +145,7 @@ var CHAPTER1_MAP = {
     ["#ff9f43", "#2a1f16", 1],
     ["#1dd1a1", "#2a1f16", 1]
   ],
+
   colorRows: [
     "000000000000000000000000000000000000000000000000000000000000000000",
     "011122222222222111111111111111111111111111111111112222222222211110",
@@ -164,9 +165,9 @@ var CHAPTER1_MAP = {
     "066a67b6766na5666769c666a6kk766r67566q6H1III1hhJvyKKKxxKKKyzKKKCh0",
     "0966s66LLLLLLL9ccd65766c66kkkkkkkkkkkkkk11111MMMBxyyzzzyxzyxyyyvh0",
     "06lcLLLNONONONLLLa56666c66666c965p666q6H1III1hhJvzxyyzyxxzRyzzxvh0",
-    "0u6LNONONONONONONL696966p96c7c6666669p7Gg111ghhhvyxzxxzyxyzyyyyvo0",
-    "06LNONONONONONONONL9666a666696765667665Ag111ghihCxyKyyyyKyzyyKyvh0",
-    "0c6LNONONONONONONL66n5666799e669566a667fg131gihhCyyyyyzxyySyxyxvi0",
+    "0u6LNONONONONONL696966p96c7c6666669p7Gg111ghhhvyxzxxzyxyzyyyyvo0",
+    "06LNONONONONONONL9666a666696765667665Ag111ghihCxyKyyyyKyzyyKyvh0",
+    "0c6LNONONONONONL66n5666799e669566a667fg131gihhCyyyyyzxyySyxyxvi0",
     "0665LLLNONONONLLL6c96696666676669656666Ag111ghhivvvvvvvvvvvvvvvvh0",
     "06ccn76LLLLLLL66d756666s66765666c666666wg131ghhohihhhhihhhihhhohh0",
     "067667766666667665666666l57666ce6696667wg111ghihhhhhhihhhhhihhihi0",
