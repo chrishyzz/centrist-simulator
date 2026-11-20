@@ -1,0 +1,106 @@
+CHAPTER 1 SCRIPT: ELECTION
+VOTERS IN PARK, speak to them before the fundraising dinner opens.
+The Commuter (Rail & Transport)
+Q1: "My train to work has been cancelled three times this week, and fares just went up again. What are you going to do about it?"
+[A] Meaningful Policy: "We’ll bring the franchise back into public ownership and cap commuter fares immediately."
+Voter: "Finally, someone talking sense. You’ve got my vote."
+System Alert: WARNING: Populist rhetoric detected. Market Confidence -5. Party Whips displeased.
+[B] Platitude: "Transport is the lifeblood of our economy. That's why I have pledged... a commission... holistic, cross-party dialogue..." [as words leave your mouth, the life drifts from their eyes]
+Voter: "Wow, you sure are clever!"
+System Alert: EXCELLENT: Masterful triangulation. Fiscal Credibility +4.
+Q2: "What about the bus routes to the outer estates? They cut the night service last year."
+[A] Meaningful Policy: "We’ll fund a municipal bus network with guaranteed hourly night routes."
+Voter: "That would genuinely save my job. Thank you."
+System Alert: CRITICAL: Uncosted compassion! Donor Confidence -6.
+[B] Platitude: "I remember when my mother worked the late shift. As a bank CEO, she often attended late night dinners at the best restaurants in town..." [you can feel your relatable anecdote is really cutting through]
+Voter: (Sighs and walks away)
+System Alert: TEXTBOOK CENTRISM: Zero commitments made. Media Relations +3. Opinion with restaurant owners and bank CEOs +53%.
+The Junior Nurse (Healthcare)
+Q1: "Our ward is chronically understaffed and half the nurses are burning out. Will you raise pay to attract more staff?"
+[A] Meaningful Policy: "Yes – we clapped for nurses as heroes during the pandemic. It's time to put action behind that gesture."
+Voter: "If you actually do that, the whole hospital will back you."
+System Alert: ALARM: Risky precedent set. Treasury Orthodoxy Index plummeting. Healthcare workforce hope and expectation reaching DANGEROUS levels. -39732720290 critical variable assessment levels.
+[B] Platitude: "Our nurses are heroes. We must work together to build a resilient healthcare framework for the future."
+Voter: [Is pushed aside by your comms director]
+System Alert: WELL PLAYED: Empathy projected without budgetary impact. Party Confidence +19. Pharma donations incoming.
+The Tenant (Housing)
+Q1: "My landlord just raised my rent by 20% and I can't afford it, I'm afraid I'll be evicted and end up on the streets. Will you back rent controls?"
+[A] Meaningful Policy: "Yes. Rent is a tax on ordinary working people, with knock effects for the whole of society. No-fault evictions are an injustice we will end."
+Voter: "That means everything."
+System Alert: PANIC: Property portfolio donors are hyperventilating! Reports of landlord militia groups are forming.
+[B] Platitude: "Everyone deserves a safe home. And I want to work with house-providers to improve your options."
+Voter: "I really don't want to be homeless."
+System Alert: IMPRESSIVE: Pivoting from 'landlord' to 'housing provider' earns credibility +42.
+The Small Shopkeeper (High Street & Energy)
+Q1: "My energy bill tripled this year, and business rates are killing the high street. How do I stay open?"
+[A] Meaningful Policy: "You won't need to worry about this anymore, friend. I am going to nationalise everything."
+Voter: "Finally! That's a big weight off my mind!"
+System Alert: WARNING: Candidate is becoming dangerously based. Market Confidence -7000.
+[B] Platitude: "Small businesses are the backbone of this country. When I interned at my uncle's hedge fund, I bought and stripped apart dozens of small businessess..." [A cute dog walks by, distracting the voter from your charming anecdote]
+Voter: "Good boy."
+System Alert: VIRAL CLIP WITH CUTE DOG boosts favorability with pet owners across demographics. Except lizard owners. Those people are weird.
+The Parent (Childcare & Schools)
+Q1: "Nursery costs more than my mortgage, and my kid’s school roof has buckets catching rainwater. What’s the plan?"
+[A] Meaningful Policy: "Universal funded childcare from nine months old and an emergency capital fund to fix school buildings."
+Voter: "That would change our lives. Seriously."
+System Alert: SYSTEM ERROR: Helping parents increase supply of 'next generation', increasing burden on local bus routes. Transport Department officials furious +1500%.
+[B] Platitude: "I see promising developments with AI as an exciting solution to the problem of so-called 'schools'...
+Voter: "So the buckets stay until the economy grows?"
+System Alert: BRAVO: Tech futurist persona invoked. Clip circulating with +3% favourability on male-centered podcasts.
+JOURNALIST
+Q1: "You've spent twenty minutes talking about 'tough choices' and 'moving forward.' Name one concrete policy you will actually implement in your first hundred days."
+[A] Platitude: "Our policy is clear: delivering a sensible, long-term plan that puts working families first while maintaining economic stability."
+Journalist: "That’s not a policy, that’s a bumper sticker. Readers will see straight through this."
+System Alert: GAFFE: Cornered by basic follow-up! Consider banning the media? Media Relations -60. Public Approval -14.
+[B] Meaningful Policy: "Day one: we cap commuter rail fares and restore public sector pay."
+Journalist: "And yet you're also promising to cut taxes, not increase borrowing..."
+System Alert: WARNING: Previous statements being unfairly weaponised promises made in the moment. Scrutiny tanking relationships with the Treasury.
+Q2: "Your campaign is taking substantial donations from private healthcare and property firms. How can voters trust you won't serve their interests?"
+[A] Platitude: "We welcome support from all sectors of society who share our vision for a modern, dynamic economy."
+Journalist: "So they're buying access, and you're calling it 'vision.' Good headline, thanks."
+System Alert: DISASTER: Evasion backfired! Public Approval -25.
+[B] Meaningful Policy: "I am not accepting corporation donations and will ban corporate lobbyists in the first 30 days."
+Journalist: "Bold pledge. But your press office announced you're attending a fundraising dinner right after this meet-and-greet?"
+System Alert: CATASTROPHE: Hostile media environment undermining trust between public servants and entrepreneurs. Risk to democratic way of life +43.
+////
+Narrator cues appear on screen at different points during the game.
+Enter Park (on arrival):
+Narrator: "Welcome to the park. Our polling said the people don't know you. Time to press the flesh! Shake hands, but for the love of God, don't make any firm commitments. We have a fundraising dinner to get to next."
+Spent > 2 minutes in Park:
+Narrator: "You've been lingering here for too long now. Nice that you like the public, but don't get used to it. Politics should be about more important things."
+Encourage Fundraising Dinner once all voters spoken to:
+Narrator: "Umm, where the fuck are you? The fundraising dinner is calling – real money lives behind closed doors, dummy."
+Eat 1st Canape at Table:
+Narrator: "Okay, good to refuel – but back to work. Donors don't write cheques for empty plates."
+Eat More Canapes (2nd time):
+Narrator: "Stop stuffing your mouth. You're running for office, not competing in a catering endurance test."
+Eat canapes (3+ times)
+"STOP, YOU IDIOT. PEOPLE ARE LOOKING."
+Last 30 Seconds of Chapter:
+Narrator: "We gotta get going. Finish up quick before democracy – or your press team – catches up to you."
+/////
+DONORS in fundraising dinner, after speaking with voters in park
+The Property Developer
+Q1: "This talk of social housing requirements... we're worried about the cost implications."
+[A] Platitude: "We value constructive dialogue with developers to ensure balanced, community-led housing outcomes."
+Donor: "Hmm. 'Community-led' sounds awfully slow. I’ll hold off on writing a cheque."
+System Alert: MISSED OPPORTUNITY: Donor unconvinced of your flexibility. Funds +£3.
+[B] Promise Everything: "Consider the red tape shredded. Affordable housing quotas will be entirely 'voluntary' under our watch."
+Donor: "Music to my ears. Put me down for £100,000. And buds will throw in the same."
+System Alert: EXCELLENT: Public assets leveraged for campaign cash! Funds +£1,000,000. Donor Confidence +43.
+The Private Healthcare Executive
+Q1: "Patient outcomes....'" [You tune him out. The canapes look better than last time. Much better.]
+[A] Platitude: "We believe in utilising every tool in the box..."
+Donor: "Thank you for your time. Let's talk again soon."
+System Alert: LUKEWARM: Donor requires firmer enthusiasm for privatisation. Funds +£1,000.
+[B] Promise Everything: "I'm very excited about expanding private contracts. Polls well."
+Donor: "Now that’s bold leadership! My board will max out our donation today."
+System Alert: BRILLIANT: NHS budget pre-allocated to friends! Funds £1,000,000. Potential post-politics career aspects increase +15%.
+The Tech & AI Lobbyist
+Q1: "We can be an AI superpower, so long as heavy-handed data privacy or copyright laws don't strangle innovation in the crib."
+[A] Platitude: "We want to harness the power of technology while ensuring robust ethical guardrails for all citizens."
+Donor: "'Guardrails' is a dirty word in Silicon Valley. We’ll back your opponent instead."
+System Alert: BLUNDER: 'Ethics' mentioned in front of a tech lobbyist. Donor Confidence -52.
+[B] Promise Everything: "[Quietly to your phone: Grok, give me an epic roast of China]."
+Donor: [Noticeably concerned about your clear AI psychosis] "Epic!'
+System Alert: VISIONARY: Citizen privacy monetised! Funds +£15,000,000. Support by bots online boosts your campaign message +52.
