@@ -1,19 +1,3 @@
-// CHAPTER 1: ELECTION - the park and the fundraising dinner.
-//
-// How to read this file
-//   x = column (0 is the far left), y = row (0 is the top). A tile is rows[y][x].
-//   "rows" is the map exactly as you drew it. A quote mark inside a row is
-//   written \" - that backslash is just how JavaScript spells a quote. Ignore it.
-//   "@" is where the player starts, "v" is a voter, "J" the journalist and "D" a
-//   donor. The game lifts these out of the grid when the level loads (the ground
-//   under them is walkable). Who each one is lives in content/chapter1-content.js.
-//   Anything NOT listed in "legend" is walkable scenery (grass, path, road,
-//   carpet, floor, and the lettering like HIGH STREET and VIP ONLY).
-//   Plants, trees and the pond are walkable too: the game shows their "desc"
-//   text the first time you step on each one.
-//   "desc" names a text in your MAP TILE DESCRIPTIONS file.
-//   "colorRows" is only the colours (one character per tile, an index into
-//   "palette"). It keeps your map looking the way you drew it.
 
 var CHAPTER1_MAP = {
   name: "Chapter 1: The Park",
@@ -49,7 +33,6 @@ var CHAPTER1_MAP = {
     "╚════════════════════════════════════════════════════════════════╝"
   ],
 
-  // What each solid or interactive symbol is.
   tiles: {
     wall:        { solid: true },
     kerb:        { solid: true },
@@ -68,7 +51,6 @@ var CHAPTER1_MAP = {
     crossing:    { solid: false }
   },
 
-  // Which symbol means which tile.
   legend: {
     "#": "hedge", "&": "shrub", "*": "flowers", "\u2663": "tree",
     "~": "pond", "\u2248": "pond", "=": "bench", "i": "lamppost",
@@ -78,16 +60,13 @@ var CHAPTER1_MAP = {
     "\u2502": "kerb", "\u2500": "kerb", "\u250c": "kerb", "\u2510": "kerb"
   },
 
-  // A few tiles share a symbol with something else, so they are set by position.
-  // The zebra crossing "===" is walkable (but a park bench "=" is not),
-  // and the "o" posts either side of the red carpet are not tables.
   overrides: {
     "41,15": "crossing", "42,15": "crossing", "43,15": "crossing",
     "41,17": "crossing", "42,17": "crossing", "43,17": "crossing",
     "47,15": "post", "47,17": "post"
   },
 
-  // Colours: [text colour, background colour, bold?]
+  // Colours: [foreground, background, bold?]
   palette: [
     ["#6b6b73", "#1b1d1b", 0],
     ["#cccccc", "#2b2b2e", 0],
@@ -95,11 +74,11 @@ var CHAPTER1_MAP = {
     ["#d9b84a", "#2b2b2e", 0],
     ["#8a8a92", "#232323", 0],
     ["#27553a", "#14201a", 0],
-    ["#cccccc", "#14201a", 0],
     ["#397a48", "#14201a", 0],
-    ["#e8e0c8", "#14201a", 1],
+    ["#397a48", "#14201a", 0],
+    ["#65a875", "#14201a", 1],
     ["#285b38", "#14201a", 0],
-    ["#feca57", "#14201a", 1],
+    ["#79b987", "#14201a", 1],
     ["#65a875", "#14201a", 1],
     ["#4b925b", "#14201a", 0],
     ["#34764a", "#14201a", 0],
@@ -114,10 +93,10 @@ var CHAPTER1_MAP = {
     ["#54a0ff", "#14201a", 1],
     ["#4b925b", "#14201a", 0],
     ["#3fbf5a", "#232323", 1],
-    ["#ff9ff3", "#14201a", 1],
-    ["#ffd866", "#14201a", 1],
-    ["#b07a3c", "#14201a", 1],
-    ["#ffffff", "#14201a", 1],
+    ["#4b925b", "#14201a", 1],
+    ["#397a48", "#14201a", 1],
+    ["#397a48", "#14201a", 1],
+    ["#65a875", "#14201a", 1],
     ["#ff6b81", "#14201a", 1],
     ["#1dd1a1", "#14201a", 1],
     ["#c98a4b", "#232323", 0],
@@ -126,7 +105,7 @@ var CHAPTER1_MAP = {
     ["#b69a70", "#2a1f16", 0],
     ["#957951", "#2a1f16", 0],
     ["#285b38", "#14201a", 0],
-    ["#ff6b81", "#2a1f16", 1],
+    ["#e8d6b8", "#2a1f16", 1],
     ["#6fb7e0", "#232323", 0],
     ["#c56cf0", "#14201a", 1],
     ["#ff6b81", "#232323", 1],
@@ -143,7 +122,11 @@ var CHAPTER1_MAP = {
     ["#ff9f43", "#232323", 1],
     ["#1dd1a1", "#232323", 1],
     ["#ff9f43", "#2a1f16", 1],
-    ["#1dd1a1", "#2a1f16", 1]
+    ["#1dd1a1", "#2a1f16", 1],
+
+    // Dedicated character colours
+    ["#ff9f43", "#14201a", 1],
+    ["#ff9ff3", "#14201a", 1]
   ],
 
   colorRows: [
