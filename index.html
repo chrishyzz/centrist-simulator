@@ -66,9 +66,11 @@ html.ch1 pre{font-size:16px;line-height:1.15}
 #log .dim{color:var(--dim)}
 #log .nar{color:var(--door)}
 #log .al{color:var(--hi);font-weight:bold}
+#log .npc{background:var(--hi);color:#fff;padding:8px 10px;margin:0 0 8px}
+#log .npc .who{color:#fff;opacity:.85;font-size:13px}
 
 #opts button,#pad button,#restart{font:inherit;background:none;color:var(--fg);border:1px solid var(--dim);padding:6px 12px;margin:6px 6px 0 0;cursor:pointer}
-#opts button{display:block;max-width:100%;text-align:left;white-space:normal}
+#opts button{display:block;max-width:100%;text-align:left;white-space:normal;color:var(--hi)}
 #pad{margin-top:12px;display:grid;grid-template-columns:repeat(3,56px);gap:4px}
 #pad button{margin:0;padding:10px 0}
 .help{color:var(--dim);font-size:12px;margin-top:10px}
@@ -148,6 +150,18 @@ function add(text,cls){
   logEl.scrollTop=logEl.scrollHeight;
 }
 function say(text){clearLog();if(text)add(text)}
+function addNpc(lines){
+  var d=document.createElement("div");
+  d.className="npc";
+  lines.forEach(function(l){
+    var p=document.createElement("div");
+    p.textContent=l.text;
+    if(l.cls)p.className=l.cls;
+    d.appendChild(p);
+  });
+  logEl.appendChild(d);
+  logEl.scrollTop=logEl.scrollHeight;
+}
 function clearOpts(){optsEl.innerHTML=""}
 function showOptions(labels,onPick){
   clearOpts();
@@ -609,9 +623,10 @@ function talkTo(n){
 function showQuestion(){
   var c=ch.convo,n=c.npc,q=n.data.questions[c.qi];
   clearLog();
-  add(n.name+(n.topic?" ("+n.topic+")":""),"dim");
-  if(q.aside)add("["+q.aside+"]","dim");
-  add("“"+q.prompt+"”");
+ var lines=[{text:n.name+(n.topic?" ("+n.topic+")":""),cls:"who"}];
+  if(q.aside)lines.push({text:"["+q.aside+"]",cls:"who"});
+  lines.push({text:"“"+q.prompt+"”"});
+  addNpc(lines);
   c.stage="q";
   showOptions(q.options.map(function(o,i){return"["+(i+1)+"] "+o.say}),pickOption);
 }
@@ -629,7 +644,7 @@ function answer(o){
   var c=ch.convo,n=c.npc;
   add("You: “"+o.say+"”"+(o.aside?"  ["+o.aside+"]":""),"dim");
   var r=o.reply,first=r.charAt(0);
-  add((first==="["||first==="(")?r:n.name.replace(/^The /,"")+": “"+r+"”");
+addNpc([{text:(first==="["||first==="(")?r:n.name.replace(/^The /,"")+": “"+r+"”"}]);
   if(o.replyAside)add("["+o.replyAside+"]","dim");
   add("SYSTEM ALERT: "+o.alert,"al");
   if(ch.tally[o.type]!==undefined)ch.tally[o.type]++;
